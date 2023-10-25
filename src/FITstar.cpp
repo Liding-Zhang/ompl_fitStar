@@ -69,6 +69,8 @@ namespace ompl
 
             // Register the setting callbacks.
             declareParam<bool>("use_k_nearest", this, &FITstar::setUseKNearest, &FITstar::getUseKNearest, "0,1");
+            declareParam<bool>("use_adaptive_batchsize", this, &FITstar::setUseAdaptiveBatchSize,
+                               &FITstar::getUseAdaptiveBatchSize, "0,1");
             declareParam<double>("rewire_factor", this, &FITstar::setRadiusFactor, &FITstar::getRadiusFactor,
                                  "1.0:0.01:3.0");
             declareParam<bool>("use_graph_pruning", this, &FITstar::enablePruning, &FITstar::isPruningEnabled, "0,1");
@@ -367,6 +369,16 @@ namespace ompl
             return graph_.getUseKNearest();
         }
 
+        void FITstar::setUseAdaptiveBatchSize(bool useAdaptiveBatchSize)
+        {
+            useAdaptiveBatchSize_ = useAdaptiveBatchSize;
+        }
+
+        bool FITstar::getUseAdaptiveBatchSize() const
+        {
+            return useAdaptiveBatchSize_;
+        }
+
         void FITstar::setMaxNumberOfGoals(unsigned int numberOfGoals)
         {
             graph_.setMaxNumberOfGoals(numberOfGoals);
@@ -483,17 +495,20 @@ namespace ompl
             // invested Thus, the first thing we do in this instance is adding the first batch of samples.
 
             // Adjust the batch size according to the decay method
-            if (solutionCost_.value() != lastsolutionCost_.value())
-            // if (true)
+            if (useAdaptiveBatchSize_)
             {
-                lastsolutionCost_.setValue(solutionCost_.value());
-                DecayMethod decay_method_ = DecayMethod::LOG;
-                const double minPossibleCost = graph_.minPossibleCost().value();
-                AdaptiveBatchSize adaptiveBatchSize_ =
-                    AdaptiveBatchSize(decay_method_, solutionCost_, minPossibleCost, batchSize_, S_max_initial_,
-                                      S_min_initial_, maxSamples_, minSamples_);
-                unsigned int numSamples = adaptiveBatchSize_.adjustBatchSize(decay_method_);
-                setBatchSize(numSamples);
+                if (solutionCost_.value() != lastsolutionCost_.value())
+                // if (true)
+                {
+                    lastsolutionCost_.setValue(solutionCost_.value());
+                    DecayMethod decay_method_ = DecayMethod::LOG;
+                    const double minPossibleCost = graph_.minPossibleCost().value();
+                    AdaptiveBatchSize adaptiveBatchSize_ =
+                        AdaptiveBatchSize(decay_method_, solutionCost_, minPossibleCost, batchSize_, S_max_initial_,
+                                          S_min_initial_, maxSamples_, minSamples_);
+                    unsigned int numSamples = adaptiveBatchSize_.adjustBatchSize(decay_method_);
+                    setBatchSize(numSamples);
+                }
             }
 
             if (isMultiqueryEnabled_ &&

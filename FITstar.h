@@ -120,6 +120,14 @@ namespace ompl
             /** \brief Returns whether to use a k-nearest RGG connection model. If false, FIT* uses an r-disc model. */
             bool getUseKNearest() const;
 
+            /** \brief Set whether to use a adaptive batch size RGG connection model. If false, FIT* uses static model.
+             */
+            void setUseAdaptiveBatchSize(bool useAdaptiveBatchSize);
+
+            /** \brief Returns whether to use a adaptive batch size RGG connection model. If false, FIT* uses static
+             * model. */
+            bool getUseAdaptiveBatchSize() const;
+
             /** \brief Set the maximum number of goals FIT* will sample from sampleable goal regions. */
             void setMaxNumberOfGoals(unsigned int numberOfGoals);
 
@@ -340,6 +348,9 @@ namespace ompl
 
             /** \brief The number of states added when the approximation is updated. */
             unsigned int batchSize_{199u};
+
+            /** \brief Whether to use a adaptive batch size RGG. If false, FIT* uses an static batchsize. */
+            bool useAdaptiveBatchSize_{true};
 
             /** \brief Max area of the sampled ellipse */
             double S_max_initial_{1.0};

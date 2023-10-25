@@ -214,7 +214,7 @@ namespace ompl
                 // _batchSize_ = std::max(_minSamples_, std::min(_maxSamples_, _batchSize_));
                 // areaList_[ratio]++;
 
-                std::cout << "---------------batchsize of current batch is : " << _batchSize_ << std::endl;
+                // std::cout << "---------------batchsize of current batch is : " << _batchSize_ << std::endl;
                 return _batchSize_;
             }
 
