@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of the University of Toronto nor the names of its
+ *   * Neither the name of the University of Munich nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -505,7 +505,7 @@ namespace ompl
                     const double minPossibleCost = graph_.minPossibleCost().value();
                     AdaptiveBatchSize adaptiveBatchSize_ =
                         AdaptiveBatchSize(decay_method_, solutionCost_, minPossibleCost, batchSize_, S_max_initial_,
-                                          S_min_initial_, maxSamples_, minSamples_);
+                                          S_min_initial_, maxSamples_, minSamples_, spaceInfo_->getStateDimension());
                     unsigned int numSamples = adaptiveBatchSize_.adjustBatchSize(decay_method_);
                     setBatchSize(numSamples);
                 }

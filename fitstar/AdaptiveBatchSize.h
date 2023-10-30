@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of the University of Toronto nor the names of its
+ *   * Neither the name of the University of Munich nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -39,6 +39,7 @@
 
 #include "ompl/geometric/planners/informedtrees/fitstar/RandomGeometricGraph.h"
 #include "ompl/geometric/planners/informedtrees/FITstar.h"
+
 // #include "ompl/pdt/src/obstacles/include/pdt/obstacles/hyperrectangle.h"
 
 namespace ompl
@@ -62,7 +63,7 @@ namespace ompl
                 AdaptiveBatchSize(const DecayMethod &decay_method, ompl::base::Cost &solutionCost,
                                   const double &minPossibleCost, unsigned int &batchSize, double &S_max_initial,
                                   double &S_min_initial, const unsigned int &maxSamples,
-                                  const unsigned int &minSamples);
+                                  const unsigned int &minSamples, std::size_t dim);
                 ~AdaptiveBatchSize() = default;
 
                 unsigned int adjustBatchSize(DecayMethod decay_method);
@@ -110,6 +111,9 @@ namespace ompl
 
                 /** \brief Returns the start states. */
                 std::size_t _iteration_;
+
+                                /** \brief Returns the start states. */
+                std::size_t dim_;
             };
 
         }  // namespace fitstar

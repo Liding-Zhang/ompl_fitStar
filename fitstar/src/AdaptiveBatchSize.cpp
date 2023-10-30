@@ -14,7 +14,7 @@
  *     copyright notice, this list of conditions and the following
  *     disclaimer in the documentation and/or other materials provided
  *     with the distribution.
- *   * Neither the name of the University of Toronto nor the names of its
+ *   * Neither the name of the University of Munich nor the names of its
  *     contributors may be used to endorse or promote products derived
  *     from this software without specific prior written permission.
  *
@@ -45,7 +45,7 @@ namespace ompl
             AdaptiveBatchSize::AdaptiveBatchSize(const DecayMethod &decay_method, ompl::base::Cost &solutionCost,
                                                  const double &minPossibleCost, unsigned int &batchSize,
                                                  double &S_max_initial, double &S_min_initial,
-                                                 const unsigned int &maxSamples, const unsigned int &minSamples)
+                                                 const unsigned int &maxSamples, const unsigned int &minSamples,std::size_t dim)
               : decay_method_(decay_method)
               , _solutionCost_(solutionCost)
               , minPossibleCost_(minPossibleCost)
@@ -54,6 +54,7 @@ namespace ompl
               , _S_min_initial_(S_min_initial)
               , _maxSamples_(maxSamples)
               , _minSamples_(minSamples)
+              , dim_(dim)
             {
             }
             unsigned int AdaptiveBatchSize::adjustBatchSize(DecayMethod decay_method)
@@ -202,12 +203,13 @@ namespace ompl
                 // std::cout << "========== current _S_min_initial_ is : " << _S_min_initial_ << std::endl;
 
                 // Logarithmic decay
-                unsigned int lambda =
-                    (_minSamples_ + _maxSamples_) / 4;  // Adjust this value to make the decay faster or slower
+                double lambda =
+                    (_minSamples_ + _maxSamples_) / dim_;  // Adjust this value to make the decay faster or slower
                 // Sigmoid function to smooth ratio
                 double smoothedValue = 1 / (1 + exp(-10 * (ratio - 0.5)));
                 double decay_factor = log(1 + lambda * smoothedValue) / log(1 + lambda);
-                // std::cout << "========== current decay_factor is : " << decay_factor << std::endl;
+                // std::cout << "========== current lambda is : " << lambda << std::endl;
+                // std::cout << "========== current dim is : " << dim_ << std::endl;
                 _batchSize_ = _minSamples_ + (_maxSamples_ - _minSamples_) * decay_factor;
 
                 // Clamp batchSize_ to be within [minSamples_, maxSamples_]
