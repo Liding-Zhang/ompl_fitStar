@@ -40,8 +40,6 @@
 #include "ompl/geometric/planners/informedtrees/fitstar/RandomGeometricGraph.h"
 #include "ompl/geometric/planners/informedtrees/FITstar.h"
 
-// #include "ompl/pdt/src/obstacles/include/pdt/obstacles/hyperrectangle.h"
-
 namespace ompl
 {
     namespace geometric
@@ -87,32 +85,31 @@ namespace ompl
                 /** \brief Type of Decay method */
                 DecayMethod decay_method_;
 
-                /** \brief Returns the start states. */
-                // ompl::base::Cost _solutionCost_;
+                /** \brief Initialize the solution cost. */
                 ompl::base::Cost _solutionCost_{std::numeric_limits<double>::infinity()};
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the minial possible cost. */
                 double minPossibleCost_;
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the batch size. */
                 unsigned int _batchSize_;
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the maximal area of n-dimensional ellipsoid. */
                 double _S_max_initial_;
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the minimal area of n-dimensional ellipsoid. */
                 double _S_min_initial_;
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the maximal number per sample. */
                 unsigned int _maxSamples_;
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the minimal number per sample. */
                 unsigned int _minSamples_;
 
-                /** \brief Returns the start states. */
+                /** \brief Initialize the iteration number. */
                 std::size_t _iteration_;
 
-                                /** \brief Returns the start states. */
+                /** \brief dimension of the states. */
                 std::size_t dim_;
             };
 
