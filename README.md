@@ -29,3 +29,15 @@ following commands:
     # next step is optional
     make -j 4 update_bindings # if you want Python bindings
     make -j 4 # replace "4" with the number of cores on your machine
+
+If you found this research useful for your own work, please use the following citation:
+
+    @INPROCEEDINGS{fit_2024,
+      author={Zhang, Liding and Bing, Zhenshan and Chen, Kejia and Chen, Lingyun and Cai, Kuanqi and Zhang, Yu and Wu, Fan and Krumbholz, Peter and Yuan, Zhilin and Haddadin, Sami and Knoll, Alois},
+      booktitle={2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+      title={Flexible Informed Trees (FIT*): Adaptive Batch-Size Approach in Informed Sampling-Based Path Planning}, 
+      year={2024},
+      volume={},
+      number={},
+      pages={3146-3152},
+      doi={10.1109/IROS58592.2024.10802466}}
